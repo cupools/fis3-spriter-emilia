@@ -5,7 +5,8 @@
 import path from 'path';
 import Emilia from 'emilia';
 
-export default function(ret, conf, settings) {
+function main(ret, conf, settings) {
+
     let src = [];
 
     fis.util.map(ret.src, function(subpath, file) {
@@ -16,10 +17,15 @@ export default function(ret, conf, settings) {
 
     src = src.map(p => path.join('.', p));
 
-    let emilia = new Emilia(Object.assign({
-        src: src
-    }, settings));
+    let options = Object.assign({src}, settings);
+    let emilia = new Emilia(options);
 
+    inject(emilia, ret);
+
+    emilia.run();
+}
+
+function inject(emilia, ret) {
     emilia.initStyle = function(p) {
         let File = emilia.File;
         let realpath = path.resolve(process.cwd(), p);
@@ -33,9 +39,19 @@ export default function(ret, conf, settings) {
         });
     };
 
+    let storage = {};
     emilia._getImageRealpath = function(url) {
-        let img = getSrc(ret, url, 'url');
-        return img && img.realpath;
+        let realpath = null;
+
+        if(storage[url]) {
+            realpath = storage[url];
+        } else {
+            let src = getSrc(ret, url, 'url');
+            realpath = src ? src.realpath : null;
+            storage[url] = realpath;
+        }
+
+        return realpath;
     };
 
     emilia.outputStyle = function(file) {
@@ -45,18 +61,17 @@ export default function(ret, conf, settings) {
     emilia.outputSprite = function(file) {
         let realpath = path.resolve(process.cwd(), file.path);
         let image = fis.file.wrap(realpath);
-        
+
+        image.useCache = false;
         image.setContent(file.content);
         fis.compile.process(image);
         ret.pkg[file.path] = image;
 
         file.url = image.url;
     };
-
-    emilia.run();
 }
 
-function getSrc(ret, val, field) {
+function getSrc(ret, val, field='realpath') {
     let src = ret.src;
     let keys = Object.keys(src);
     let image = null;
@@ -72,3 +87,5 @@ function getSrc(ret, val, field) {
 
     return image;
 }
+
+export default main;

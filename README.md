@@ -1,6 +1,8 @@
 #fis3-spriter-emilia
 
-> Base on emilia, support rem.
+> Base on [Emilia](https://github.com/cupools/emilia), supports rem, supports inline, supports output multiple sprite images according to different sprite mark.
+
+`Emilia` gets stylesheet files and recognizes sprite mark like `url(a.png?__sprite)`, finally output updated stylesheet files as well as sprite pictures. It supports `rem` and `px`, also supports numerical conversion.
 
 ## Install
 
@@ -16,15 +18,40 @@ fis.match('::package', {
 });
 
 fis.config.set('settings.spriter.emilia', {
-    src: ['*.css'],
     dest: './components/css/',
     output: './components/images/',
-    cssPath: '../components/images/',
     prefix: 'sprite-',
     algorithm: 'binary-tree',
     padding: 10,
     unit: 'px',
     convert: 1,
-    quiet: false
+    quiet: true
 });
+```
+
+## Examples
+
+```css
+/*    origin stylesheet    */
+.icon0 {
+  background: #ccc url(../images/0.png?__icon) no-repeat;
+  background-size: 128px 128px;
+}
+.icon2 {
+  background: url(../images/2.png?__icon) no-repeat;
+  background-size: 50px 50px;
+}
+
+/*    result stylesheet    */
+.icon0 {
+  background: #ccc url(../images/sprite-icon.png) no-repeat;
+  background-position: 0rem 0rem;
+  background-size: 22.875rem 16rem;
+}
+.icon2 {
+  color: #ccc;
+  background: url(../images/sprite-icon.png) no-repeat;
+  background-position: -16.625rem 0rem;
+  background-size: 22.875rem 16rem;
+}
 ```

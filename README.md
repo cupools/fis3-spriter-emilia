@@ -1,6 +1,6 @@
 #fis3-spriter-emilia
 
-> Base on [Emilia](https://github.com/cupools/emilia), supports rem, supports inline, supports output multiple sprite images according to different sprite mark.
+> Base on [Emilia](https://github.com/cupools/emilia), supports rem, supports inline, supports output multiple sprite pictures according to different sprite marks.
 
 `Emilia` gets stylesheet files and recognizes sprite mark like `url(a.png?__sprite)`, finally output updated stylesheet files as well as sprite pictures. It supports `rem` and `px`, also supports numerical conversion.
 

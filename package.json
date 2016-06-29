@@ -1,6 +1,6 @@
 {
     "name": "fis3-spriter-emilia",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "fis3 spriter, base on emilia, supports rem",
     "main": "main.js",
     "author": "liyh <cupools@gmail.com>",

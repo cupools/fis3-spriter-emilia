@@ -6,7 +6,7 @@
     "author": "liyh <cupools@gmail.com>",
     "license": "MIT",
     "dependencies": {
-        "emilia": "^0.0.1"
+        "emilia": "^0.0.4"
     },
     "devDependencies": {
         "babel-cli": "^6.9.0",

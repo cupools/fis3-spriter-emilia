@@ -55,3 +55,7 @@ fis.config.set('settings.spriter.emilia', {
   background-size: 22.875rem 16rem;
 }
 ```
+
+## Update
+- v0.1.0
+    - Fix fatal bug cause by path seperator in windows
